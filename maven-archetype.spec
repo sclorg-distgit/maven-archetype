@@ -2,14 +2,16 @@
 %{!?scl:%global pkg_name %{name}}
 %{?java_common_find_provides_and_requires}
 
-%global baserelease 3
+%global baserelease 4
 
 Name:           %{?scl_prefix}maven-archetype
 Version:        2.4
 Release:        3.%{baserelease}%{?dist}
 Summary:        Maven project templating toolkit
 
-License:        ASL 2.0
+# Most of the code is under ASL 2.0, but some bundled jdom sources are
+# under ASL 1.1
+License:        ASL 2.0 and ASL 1.1
 URL:            https://maven.apache.org/archetype/
 Source0:        http://repo.maven.apache.org/maven2/org/apache/maven/archetype/%{pkg_name}/%{version}/%{pkg_name}-%{version}-source-release.zip
 
@@ -225,6 +227,9 @@ set -e -x
 %doc LICENSE
 
 %changelog
+* Thu Feb 16 2017 Mikolaj Izdebski <mizdebsk@redhat.com> - 2.4-4.3
+- Fix license tag
+
 * Tue Feb 07 2017 Michael Simacek <msimacek@redhat.com> - 2.4-3.3
 - Fix directory ownership
 - Resolves rhbz#1418384
