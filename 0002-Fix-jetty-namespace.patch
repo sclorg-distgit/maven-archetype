@@ -1,0 +1,238 @@
+From 0d3632c231fbc057c338e067d9eb648a97d40583 Mon Sep 17 00:00:00 2001
+From: Mikolaj Izdebski <mizdebsk@redhat.com>
+Date: Fri, 13 Mar 2015 14:05:09 +0100
+Subject: [PATCH 2/3] Fix jetty namespace
+
+---
+ .../java/org/apache/maven/archetype/ArchetypeCatalogsTest.java    | 4 ++--
+ .../org/apache/maven/archetype/test/ArchetyperRoundtripTest.java  | 4 ++--
+ .../maven/archetype/test/ArchetyperRoundtripWithProxyTest.java    | 4 ++--
+ .../org/apache/maven/archetype/test/RoundtripMultiModuleTest.java | 4 ++--
+ archetype-samples/webapp/pom.xml                                  | 4 ++--
+ archetype-testing/archetype-proxy/pom.xml                         | 8 ++++----
+ .../main/java/org/apache/maven/archetype/proxy/ProxyServlet.java  | 2 +-
+ .../java/org/apache/maven/archetype/proxy/RepositoryServlet.java  | 6 +++---
+ archetype-testing/archetype-repository/pom.xml                    | 8 ++++----
+ .../org/apache/maven/archetype/repository/RepositoryServlet.java  | 6 +++---
+ pom.xml                                                           | 2 +-
+ 11 files changed, 26 insertions(+), 26 deletions(-)
+
+diff --git a/archetype-common/src/test/java/org/apache/maven/archetype/ArchetypeCatalogsTest.java b/archetype-common/src/test/java/org/apache/maven/archetype/ArchetypeCatalogsTest.java
+index 952caa4..840417a 100644
+--- a/archetype-common/src/test/java/org/apache/maven/archetype/ArchetypeCatalogsTest.java
++++ b/archetype-common/src/test/java/org/apache/maven/archetype/ArchetypeCatalogsTest.java
+@@ -22,8 +22,8 @@ import org.apache.maven.archetype.catalog.Archetype;
+ import org.apache.maven.archetype.catalog.ArchetypeCatalog;
+ import org.apache.maven.archetype.catalog.io.xpp3.ArchetypeCatalogXpp3Writer;
+ import org.codehaus.plexus.PlexusTestCase;
+-import org.mortbay.jetty.Server;
+-import org.mortbay.jetty.webapp.WebAppContext;
++import org.eclipse.jetty.Server;
++import org.eclipse.jetty.webapp.WebAppContext;
+ 
+ import java.io.File;
+ import java.io.FileWriter;
+diff --git a/archetype-common/src/test/java/org/apache/maven/archetype/test/ArchetyperRoundtripTest.java b/archetype-common/src/test/java/org/apache/maven/archetype/test/ArchetyperRoundtripTest.java
+index f6f9c55..ca41101 100644
+--- a/archetype-common/src/test/java/org/apache/maven/archetype/test/ArchetyperRoundtripTest.java
++++ b/archetype-common/src/test/java/org/apache/maven/archetype/test/ArchetyperRoundtripTest.java
+@@ -38,8 +38,8 @@ import org.apache.maven.project.interpolation.ModelInterpolator;
+ import org.codehaus.plexus.PlexusTestCase;
+ import org.codehaus.plexus.util.FileUtils;
+ import org.codehaus.plexus.util.StringUtils;
+-import org.mortbay.jetty.Server;
+-import org.mortbay.jetty.webapp.WebAppContext;
++import org.eclipse.jetty.Server;
++import org.eclipse.jetty.webapp.WebAppContext;
+ 
+ import java.io.File;
+ import java.io.FileWriter;
+diff --git a/archetype-common/src/test/java/org/apache/maven/archetype/test/ArchetyperRoundtripWithProxyTest.java b/archetype-common/src/test/java/org/apache/maven/archetype/test/ArchetyperRoundtripWithProxyTest.java
+index a58b828..d04d724 100644
+--- a/archetype-common/src/test/java/org/apache/maven/archetype/test/ArchetyperRoundtripWithProxyTest.java
++++ b/archetype-common/src/test/java/org/apache/maven/archetype/test/ArchetyperRoundtripWithProxyTest.java
+@@ -39,8 +39,8 @@ import org.apache.maven.project.interpolation.ModelInterpolator;
+ import org.codehaus.plexus.PlexusTestCase;
+ import org.codehaus.plexus.util.FileUtils;
+ import org.codehaus.plexus.util.StringUtils;
+-import org.mortbay.jetty.Server;
+-import org.mortbay.jetty.webapp.WebAppContext;
++import org.eclipse.jetty.Server;
++import org.eclipse.jetty.webapp.WebAppContext;
+ 
+ import java.io.File;
+ import java.io.FileOutputStream;
+diff --git a/archetype-common/src/test/java/org/apache/maven/archetype/test/RoundtripMultiModuleTest.java b/archetype-common/src/test/java/org/apache/maven/archetype/test/RoundtripMultiModuleTest.java
+index fd66d35..29b7510 100644
+--- a/archetype-common/src/test/java/org/apache/maven/archetype/test/RoundtripMultiModuleTest.java
++++ b/archetype-common/src/test/java/org/apache/maven/archetype/test/RoundtripMultiModuleTest.java
+@@ -39,8 +39,8 @@ import org.apache.maven.project.interpolation.ModelInterpolator;
+ import org.codehaus.plexus.PlexusTestCase;
+ import org.codehaus.plexus.util.FileUtils;
+ import org.codehaus.plexus.util.StringUtils;
+-import org.mortbay.jetty.Server;
+-import org.mortbay.jetty.webapp.WebAppContext;
++import org.eclipse.jetty.Server;
++import org.eclipse.jetty.webapp.WebAppContext;
+ 
+ import java.io.File;
+ import java.io.FileOutputStream;
+diff --git a/archetype-samples/webapp/pom.xml b/archetype-samples/webapp/pom.xml
+index d65a097..b6153ee 100644
+--- a/archetype-samples/webapp/pom.xml
++++ b/archetype-samples/webapp/pom.xml
+@@ -22,11 +22,11 @@
+                 <defaultGoal>jetty:run</defaultGoal>
+                 <plugins>
+                     <plugin>
+-                        <groupId>org.mortbay.jetty</groupId>
++                        <groupId>org.eclipse.jetty</groupId>
+                         <artifactId>maven-jetty-plugin</artifactId>
+                         <configuration>
+                             <connectors>
+-                                <connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
++                                <connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
+                                     <port>15000</port>
+                                     <maxIdleTime>60000</maxIdleTime>
+                                 </connector>
+diff --git a/archetype-testing/archetype-proxy/pom.xml b/archetype-testing/archetype-proxy/pom.xml
+index 8e2cd3f..a017711 100644
+--- a/archetype-testing/archetype-proxy/pom.xml
++++ b/archetype-testing/archetype-proxy/pom.xml
+@@ -47,7 +47,7 @@
+       <scope>provided</scope>
+     </dependency>
+     <dependency>
+-      <groupId>org.mortbay.jetty</groupId>
++      <groupId>org.eclipse.jetty</groupId>
+       <artifactId>jetty-util</artifactId>
+       <version>6.1.11</version>
+       <scope>compile</scope>
+@@ -68,11 +68,11 @@
+           </proxy>
+           </proxies>
+         -->
+-        <groupId>org.mortbay.jetty</groupId>
++        <groupId>org.eclipse.jetty</groupId>
+         <artifactId>maven-jetty-plugin</artifactId>
+         <configuration>
+           <connectors>
+-            <connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
++            <connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
+               <port>18881</port>
+               <maxIdleTime>60000</maxIdleTime>
+             </connector>
+@@ -84,4 +84,4 @@
+       </plugin>
+     </plugins>
+   </build>
+-</project>
+\ No newline at end of file
++</project>
+diff --git a/archetype-testing/archetype-proxy/src/main/java/org/apache/maven/archetype/proxy/ProxyServlet.java b/archetype-testing/archetype-proxy/src/main/java/org/apache/maven/archetype/proxy/ProxyServlet.java
+index 8388221..e749d15 100644
+--- a/archetype-testing/archetype-proxy/src/main/java/org/apache/maven/archetype/proxy/ProxyServlet.java
++++ b/archetype-testing/archetype-proxy/src/main/java/org/apache/maven/archetype/proxy/ProxyServlet.java
+@@ -41,7 +41,7 @@ import javax.servlet.http.HttpServlet;
+ import javax.servlet.http.HttpServletRequest;
+ import javax.servlet.http.HttpServletResponse;
+ 
+-import org.mortbay.util.IO;
++import org.eclipse.jetty.util.IO;
+ 
+ /**
+  * Stolen code from Mortbay
+diff --git a/archetype-testing/archetype-proxy/src/main/java/org/apache/maven/archetype/proxy/RepositoryServlet.java b/archetype-testing/archetype-proxy/src/main/java/org/apache/maven/archetype/proxy/RepositoryServlet.java
+index a612d63..7736a7f 100644
+--- a/archetype-testing/archetype-proxy/src/main/java/org/apache/maven/archetype/proxy/RepositoryServlet.java
++++ b/archetype-testing/archetype-proxy/src/main/java/org/apache/maven/archetype/proxy/RepositoryServlet.java
+@@ -35,8 +35,8 @@ import javax.servlet.ServletResponse;
+ import javax.servlet.http.HttpServlet;
+ import javax.servlet.http.HttpServletRequest;
+ import javax.servlet.http.HttpServletResponse;
+-import org.mortbay.util.IO;
+-import org.mortbay.util.StringUtil;
++import org.eclipse.jetty.util.IO;
++import org.eclipse.jetty.util.StringUtil;
+ 
+ /**
+  *
+@@ -261,4 +261,4 @@ public class RepositoryServlet
+         return "Repository Servlet";
+     }
+ 
+-}
+\ No newline at end of file
++}
+diff --git a/archetype-testing/archetype-repository/pom.xml b/archetype-testing/archetype-repository/pom.xml
+index cc597c5..ed38524 100644
+--- a/archetype-testing/archetype-repository/pom.xml
++++ b/archetype-testing/archetype-repository/pom.xml
+@@ -47,7 +47,7 @@
+       <scope>provided</scope>
+     </dependency>
+     <dependency>
+-      <groupId>org.mortbay.jetty</groupId>
++      <groupId>org.eclipse.jetty</groupId>
+       <artifactId>jetty-util</artifactId>
+       <version>6.1.11</version>
+       <scope>compile</scope>
+@@ -68,11 +68,11 @@
+           </proxy>
+           </proxies>
+         -->
+-        <groupId>org.mortbay.jetty</groupId>
++        <groupId>org.eclipse.jetty</groupId>
+         <artifactId>maven-jetty-plugin</artifactId>
+         <configuration>
+           <connectors>
+-            <connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
++            <connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
+               <port>18882</port>
+               <maxIdleTime>60000</maxIdleTime>
+             </connector>
+@@ -90,4 +90,4 @@
+       </plugin>
+     </plugins>
+   </build>
+-</project>
+\ No newline at end of file
++</project>
+diff --git a/archetype-testing/archetype-repository/src/main/java/org/apache/maven/archetype/repository/RepositoryServlet.java b/archetype-testing/archetype-repository/src/main/java/org/apache/maven/archetype/repository/RepositoryServlet.java
+index 79c9f4f..48c91d1 100644
+--- a/archetype-testing/archetype-repository/src/main/java/org/apache/maven/archetype/repository/RepositoryServlet.java
++++ b/archetype-testing/archetype-repository/src/main/java/org/apache/maven/archetype/repository/RepositoryServlet.java
+@@ -29,8 +29,8 @@ import javax.servlet.http.HttpServlet;
+ import javax.servlet.http.HttpServletRequest;
+ import javax.servlet.http.HttpServletResponse;
+ 
+-import org.mortbay.util.IO;
+-import org.mortbay.util.StringUtil;
++import org.eclipse.jetty.util.IO;
++import org.eclipse.jetty.util.StringUtil;
+ 
+ /**
+  *
+@@ -86,4 +86,4 @@ public class RepositoryServlet
+             IO.close( is );
+         }
+     }
+-}
+\ No newline at end of file
++}
+diff --git a/pom.xml b/pom.xml
+index 54bcd46..e17042f 100644
+--- a/pom.xml
++++ b/pom.xml
+@@ -249,7 +249,7 @@
+           </configuration>
+         </plugin>
+         <plugin>
+-          <groupId>org.mortbay.jetty</groupId>
++          <groupId>org.eclipse.jetty</groupId>
+           <artifactId>maven-jetty-plugin</artifactId>
+           <version>6.1.6</version>
+         </plugin>
+-- 
+2.5.5
+
