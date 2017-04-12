@@ -2,7 +2,7 @@
 %{!?scl:%global pkg_name %{name}}
 %{?java_common_find_provides_and_requires}
 
-%global baserelease 2
+%global baserelease 3
 
 Name:           %{?scl_prefix}maven-archetype
 Version:        2.4
@@ -195,23 +195,40 @@ set -e -x
 
 %files -f .mfiles-maven-archetype
 %doc LICENSE NOTICE
+%dir %{_mavenpomdir}/%{pkg_name}
 
 %files catalog -f .mfiles-archetype-catalog
+%dir %{_javadir}/%{pkg_name}
+%dir %{_mavenpomdir}/%{pkg_name}
 
 %files descriptor -f .mfiles-archetype-descriptor
+%dir %{_javadir}/%{pkg_name}
+%dir %{_mavenpomdir}/%{pkg_name}
 
 %files registry -f .mfiles-archetype-registry
+%dir %{_javadir}/%{pkg_name}
+%dir %{_mavenpomdir}/%{pkg_name}
 
 %files common -f .mfiles-archetype-common
+%dir %{_javadir}/%{pkg_name}
+%dir %{_mavenpomdir}/%{pkg_name}
 
 %files packaging -f .mfiles-archetype-packaging
+%dir %{_javadir}/%{pkg_name}
+%dir %{_mavenpomdir}/%{pkg_name}
 
 %files -n %{?scl_prefix}%{pkg_name}-plugin -f .mfiles-maven-archetype-plugin
+%dir %{_javadir}/%{pkg_name}
+%dir %{_mavenpomdir}/%{pkg_name}
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE
 
 %changelog
+* Tue Feb 07 2017 Michael Simacek <msimacek@redhat.com> - 2.4-3.3
+- Fix directory ownership
+- Resolves rhbz#1418384
+
 * Fri Jan 20 2017 Michael Simacek <msimacek@redhat.com> - 2.4-3.2
 - Build for rh-maven33
 
